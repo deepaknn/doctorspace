@@ -7,10 +7,12 @@ import app.doctorspace.doctorspace.service.MedicalRegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +34,19 @@ public class LoadDataController {
 
     @PostMapping("/fetch/medical-register")
     public ResponseEntity<?> fetchMedicalRegister(@RequestBody List<MedicalRegisterRequest> medicalRegisterRequestList) {
-        List<MedicalRegister> medicalRegisterList = new ArrayList<>();
-        Integer count = 0;
-        for (MedicalRegisterRequest medicalRegisterRequest : medicalRegisterRequestList) {
-//            log.debug("***** Started fetch for record no : " + count++);
-            System.out.println("***** Started fetch for record no : " + count++);
-            medicalRegisterList.add(medicalRegisterService.fetchAndLoad(medicalRegisterRequest));
-        }
-        medicalRegisterRepository.saveAll(medicalRegisterList);
+        asyncFetchMedicalRegister(medicalRegisterRequestList);
         return ResponseEntity.ok("Fetch Success");
+    }
+
+    @Async
+    public void asyncFetchMedicalRegister(List<MedicalRegisterRequest> medicalRegisterRequestList) {
+        LocalDateTime start = LocalDateTime.now();
+        List<MedicalRegister> medicalRegisterList = new ArrayList<>();
+        medicalRegisterRequestList.parallelStream().forEach(medicalRegisterRequest -> {
+            medicalRegisterList.add(medicalRegisterService.fetchAndLoad(medicalRegisterRequest));
+            System.out.println("***** Started fetch for record no : " + medicalRegisterList.size() + " : " + medicalRegisterRequest.getDoctorId() + " : " + medicalRegisterRequest.getRegdNoValue());
+        });
+        medicalRegisterRepository.saveAll(medicalRegisterList);
+        System.out.println("Completed at : " + start + " ---> " + LocalDateTime.now());
     }
 }
