@@ -46,7 +46,7 @@ public class LoadDataController {
             medicalRegisterList.add(medicalRegisterService.fetchAndLoad(medicalRegisterRequest));
             System.out.println("***** Started fetch for record no : " + medicalRegisterList.size() + " : " + medicalRegisterRequest.getDoctorId() + " : " + medicalRegisterRequest.getRegdNoValue());
         });
-        medicalRegisterRepository.saveAll(medicalRegisterList);
+        //medicalRegisterRepository.saveAll(medicalRegisterList);
         System.out.println("Completed at : " + start + " ---> " + LocalDateTime.now());
     }
 }
