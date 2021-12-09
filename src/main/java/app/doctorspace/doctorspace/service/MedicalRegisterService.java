@@ -23,7 +23,7 @@ public class MedicalRegisterService {
     public MedicalRegister fetchAndLoad(MedicalRegisterRequest medicalRegisterRequest){
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<MedicalRegisterRequest> medHttpReq = new HttpEntity<>(medicalRegisterRequest);
-        MedicalRegister medicalRegister;
+        MedicalRegister medicalRegister = null;
         try {
             medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
         } catch (Exception e) {
@@ -32,7 +32,11 @@ public class MedicalRegisterService {
                 medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
             } catch (Exception ex) {
                 ex.printStackTrace();
-                medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
+                try {
+                    medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                }
             }
         }
         medicalRegisterRepository.save(medicalRegister);
