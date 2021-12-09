@@ -36,6 +36,8 @@ public class MedicalRegisterService {
                     medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
                 } catch (Exception exc) {
                     exc.printStackTrace();
+                    medicalRegister.setDoctorId(Long.getLong(medicalRegisterRequest.getDoctorId()));
+                    medicalRegister.setRegistrationNo(medicalRegisterRequest.getRegdNoValue());
                 }
             }
         }
