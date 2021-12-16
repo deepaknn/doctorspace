@@ -26,14 +26,17 @@ public class MedicalRegisterService {
         MedicalRegister medicalRegister = null;
         try {
             medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
+            medicalRegister.setMedicalRegisterFetched(true);
         } catch (Exception e) {
             e.printStackTrace();
             try {
                 medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
+                medicalRegister.setMedicalRegisterFetched(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 try {
                     medicalRegister = restTemplate.postForObject("https://www.nmc.org.in/MCIRest/open/getDataFromService?service=getDoctorDetailsByIdImr", medHttpReq, MedicalRegister.class);
+                    medicalRegister.setMedicalRegisterFetched(true);
                 } catch (Exception exc) {
                     exc.printStackTrace();
                     medicalRegister.setDoctorId(Long.getLong(medicalRegisterRequest.getDoctorId()));
