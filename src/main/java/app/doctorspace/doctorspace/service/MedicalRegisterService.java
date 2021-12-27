@@ -70,9 +70,9 @@ public class MedicalRegisterService {
         return medicalRegister;
     }
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 300000)
+    @Scheduled(initialDelay = 1000)
     public void loadRecords(){
-        List<MedicalRegister> medicalRegisterList = medicalRegisterRepository.findTop10000ByMedicalRegisterFetched(false);
+        List<MedicalRegister> medicalRegisterList = medicalRegisterRepository.findByMedicalRegisterFetched(false);
         List<MedicalRegisterRequest> medicalRegisterRequestList = new ArrayList<>();
         LocalDateTime start = LocalDateTime.now();
         medicalRegisterList.parallelStream().forEach(medicalRegister -> {
