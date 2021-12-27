@@ -6,14 +6,18 @@ import app.doctorspace.doctorspace.repository.MedicalRegisterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Slf4j
+@EnableScheduling
 public class MedicalRegisterService {
 
     @Autowired
@@ -60,12 +64,32 @@ public class MedicalRegisterService {
                     medicalRegister.setMedicalRegisterFetched(true);
                 } catch (Exception exc) {
                     exc.printStackTrace();
-                    medicalRegister.setDoctorId(Long.getLong(medicalRegisterRequest.getDoctorId()));
-                    medicalRegister.setRegistrationNo(medicalRegisterRequest.getRegdNoValue());
                 }
             }
         }
-        medicalRegisterRepository.save(medicalRegister);
         return medicalRegister;
+    }
+
+    @Scheduled(initialDelay = 1000, fixedDelay = 300000)
+    public void loadRecords(){
+        List<MedicalRegister> medicalRegisterList = medicalRegisterRepository.findTop5ByMedicalRegisterFetched(false);
+        List<MedicalRegisterRequest> medicalRegisterRequestList = new ArrayList<>();
+        LocalDateTime start = LocalDateTime.now();
+        medicalRegisterList.parallelStream().forEach(medicalRegister -> {
+            try {
+                MedicalRegisterRequest medicalRegisterRequest = MedicalRegisterRequest.builder()
+                        .doctorId(String.valueOf(medicalRegister.getDoctorId()))
+                        .regdNoValue(medicalRegister.getRegistrationNo())
+                        .build();
+                MedicalRegister medicalRegisterFetched = fetchAndLoad(medicalRegisterRequest);
+                medicalRegisterFetched.setId(medicalRegister.getId());
+                medicalRegisterRepository.save(medicalRegisterFetched);
+                medicalRegisterRequestList.add(medicalRegisterRequest);
+                System.out.println("***** Started fetch for record no : " + medicalRegisterRequestList.size());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        System.out.println("Completed at : " + start + " ---> " + LocalDateTime.now());
     }
 }
