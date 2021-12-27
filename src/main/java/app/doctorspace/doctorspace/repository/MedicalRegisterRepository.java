@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface MedicalRegisterRepository extends JpaRepository<MedicalRegister, Long> {
 
-    List<MedicalRegister> findTop5ByMedicalRegisterFetched(Boolean medicalRegisterFetched);
+    List<MedicalRegister> findTop10000ByMedicalRegisterFetched(Boolean medicalRegisterFetched);
 }
