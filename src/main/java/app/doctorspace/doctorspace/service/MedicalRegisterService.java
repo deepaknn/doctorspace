@@ -3,21 +3,42 @@ package app.doctorspace.doctorspace.service;
 import app.doctorspace.doctorspace.entity.MedicalRegister;
 import app.doctorspace.doctorspace.entity.MedicalRegisterRequest;
 import app.doctorspace.doctorspace.repository.MedicalRegisterRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MedicalRegisterService {
 
     @Autowired
     MedicalRegisterRepository medicalRegisterRepository;
 
-    public void loadData(List<MedicalRegister> medicalRegisterList) {
-        medicalRegisterRepository.saveAll(medicalRegisterList);
+    public void loadData(List<MedicalRegisterRequest> medicalRegisterRequestList) {
+        List<MedicalRegister> medicalRegisterList = new ArrayList<>();
+        medicalRegisterRequestList.parallelStream().forEach(medicalRegisterRequest -> {
+            MedicalRegister medicalRegister = MedicalRegister.builder()
+                    .doctorId(Long.valueOf(medicalRegisterRequest.getDoctorId()))
+                    .registrationNo(medicalRegisterRequest.getRegdNoValue())
+                    .build();
+            medicalRegisterRepository.save(medicalRegister);
+            medicalRegisterList.add(medicalRegister);
+            log.info("Inserted record no : " + medicalRegisterList.size());
+        });
+//        for (int i = 0; i < 1000; i++) {
+//            medicalRegisterList.add(MedicalRegister.builder()
+//                    .doctorId(Long.valueOf(medicalRegisterRequestList.get(i).getDoctorId()))
+//                    .registrationNo(medicalRegisterRequestList.get(i).getRegdNoValue())
+//                    .build());
+//            log.info("Inserted record no : " + medicalRegisterList.size());
+//        }
+//        medicalRegisterRepository.saveAll(medicalRegisterList);
+
     }
 
     public MedicalRegister fetchAndLoad(MedicalRegisterRequest medicalRegisterRequest){

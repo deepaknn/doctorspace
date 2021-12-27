@@ -29,8 +29,8 @@ public class LoadDataController {
     MedicalRegisterRepository medicalRegisterRepository;
 
     @PostMapping("/load/data")
-    public ResponseEntity<?> loadData(@RequestBody List<MedicalRegister> medicalRegisterList) {
-        medicalRegisterService.loadData(medicalRegisterList);
+    public ResponseEntity<?> loadData(@RequestBody List<MedicalRegisterRequest> medicalRegisterRequestList) {
+        medicalRegisterService.loadData(medicalRegisterRequestList);
         return ResponseEntity.ok("Data loaded successfully.");
     }
 
