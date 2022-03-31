@@ -70,7 +70,7 @@ public class MedicalRegisterService {
         return medicalRegister;
     }
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 86400000)
+    //@Scheduled(initialDelay = 1000, fixedDelay = 86400000)
     public void loadRecords(){
         List<MedicalRegister> medicalRegisterList = medicalRegisterRepository.findByMedicalRegisterFetched(false);
         List<MedicalRegisterRequest> medicalRegisterRequestList = new ArrayList<>();
