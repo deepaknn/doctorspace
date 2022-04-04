@@ -1,10 +1,10 @@
-FROM ghcr.io/graalvm/graalvm-ce:22.0.0.2
+FROM ghcr.io/graalvm/graalvm-ce:ol7-java17-22.0.0.2
 
 ADD . /build
 WORKDIR /build
 
 # For SDKMAN to work we need unzip & zip
-RUN apt-get install -y unzip zip
+RUN yum install -y unzip zip
 
 RUN \
     # Install SDKMAN
