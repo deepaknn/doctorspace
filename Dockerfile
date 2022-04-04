@@ -4,7 +4,7 @@ ADD . /build
 WORKDIR /build
 
 # For SDKMAN to work we need unzip & zip
-RUN yum install -y unzip zip
+RUN apt-get install -y unzip zip
 
 RUN \
     # Install SDKMAN
