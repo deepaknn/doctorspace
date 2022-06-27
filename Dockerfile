@@ -18,5 +18,8 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
 RUN native-image --version
 
-ENTRYPOINT bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && $0"
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests=true -Pnative package
 
+ARG BINARY=target/doctorspace
+COPY ${BINARY} app
+ENTRYPOINT ["app"]
