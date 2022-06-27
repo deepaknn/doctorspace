@@ -18,4 +18,5 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
 RUN native-image --version
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests=true -Pnative package
+ENTRYPOINT bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && $0"
+
