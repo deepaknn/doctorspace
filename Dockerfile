@@ -6,7 +6,7 @@ variables:
     - docker:20.10.8-dind
   stage: build_push
   before_script:
-    - apk add --update ghcr.io/graalvm/graalvm-ce:ol7-java17-22.0.0.2
+    - apk add --update ol7-java17-22.0.0.2
   script:
     - gu install native-image
     - chmod 755 ./mvnw
