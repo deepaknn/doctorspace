@@ -18,7 +18,7 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
 RUN native-image --version
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests=true -Pnative package
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -Pnative -DskipTests package
 
 FROM oraclelinux:7-slim
  
