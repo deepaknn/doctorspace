@@ -3,6 +3,7 @@ FROM ghcr.io/graalvm/graalvm-ce:ol7-java17-22.0.0.2
 ADD . /build
 WORKDIR /build
 
+RUN yum install -y gcc build-essential libz-dev zlib1g-dev
 # For SDKMAN to work we need unzip & zip
 RUN yum install -y unzip zip
 
