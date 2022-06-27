@@ -18,4 +18,4 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
 RUN native-image --version
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn spring-boot:build-image
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests=true -Pnative package
