@@ -20,6 +20,12 @@ RUN native-image --version
 
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests=true -Pnative package
 
-ARG BINARY=target/doctorspace
-COPY ${BINARY} app
-ENTRYPOINT ["app"]
+FROM oraclelinux:7-slim
+ 
+MAINTAINER Deepak
+ 
+# Add Spring Boot Native app spring-boot-graal to Container
+COPY --from=0 "/build/target/doctorspace" doctorspace
+ 
+# Fire up our Spring Boot Native app by default
+CMD [ "sh", "-c", "./doctorspace" ]
