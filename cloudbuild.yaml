@@ -2,7 +2,7 @@
  # Build the container image
  - name: 'asia.gcr.io/winter-runway-354606/custom-image'
 #    args: ['build', '-t', 'gcr.io/$PROJECT_ID/doctorspace:$COMMIT_SHA', '.']
-   args: [''spring-boot:build-image']
+   args: ['spring-boot:build-image']
    entrypoint: mvn
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
