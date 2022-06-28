@@ -27,14 +27,14 @@ RUN \
         https://download.docker.com/linux/centos/docker-ce.repo; \
     yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y; \
     docker --version; \
-    source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -Pnative -DskipTests package;
+    source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn spring-boot:build-image;
 
-FROM oraclelinux:7-slim
+# FROM oraclelinux:7-slim
 
-MAINTAINER Deepak
+# MAINTAINER Deepak
 
-# Add Spring Boot Native app spring-boot-graal to Container
-COPY --from=0 "/build/target/doctorspace" doctorspace
+# # Add Spring Boot Native app spring-boot-graal to Container
+# COPY --from=0 "/build/target/doctorspace" doctorspace
 
-# Fire up our Spring Boot Native app by default
-CMD [ "sh", "-c", "./doctorspace" ]
+# # Fire up our Spring Boot Native app by default
+# CMD [ "sh", "-c", "./doctorspace" ]
