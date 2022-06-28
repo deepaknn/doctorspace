@@ -12,7 +12,7 @@
    args:
    - 'run'
    - 'deploy'
-   - 'doctorspace'
+   - 'project-v1-be-native'
    - '--image'
    - 'gcr.io/$PROJECT_ID/doctorspace:$COMMIT_SHA'
    - '--region'
