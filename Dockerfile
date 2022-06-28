@@ -19,7 +19,15 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
 RUN native-image --version
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -Pnative -DskipTests package
+RUN \
+    yum update -y; \
+    yum install -y yum-utils; \
+    yum-config-manager \
+        --add-repo \
+        https://download.docker.com/linux/centos/docker-ce.repo; \
+    yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y; \
+    docker --version; \
+    source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -Pnative -DskipTests package;
 
 FROM oraclelinux:7-slim
 
