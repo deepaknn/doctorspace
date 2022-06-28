@@ -27,6 +27,7 @@ RUN \
         https://download.docker.com/linux/centos/docker-ce.repo; \
     yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y; \
     docker --version; \
+    systemctl start docker; \
     source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn spring-boot:build-image;
 
 # FROM oraclelinux:7-slim
