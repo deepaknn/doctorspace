@@ -3,7 +3,7 @@ FROM ghcr.io/graalvm/graalvm-ce:ol7-java17-22.0.0.2
 ADD . /build
 WORKDIR /build
 
-RUN yum install -y gcc build-essential libz-dev zlib1g-dev
+# RUN yum install -y gcc build-essential libz-dev zlib1g-dev
 # For SDKMAN to work we need unzip & zip
 RUN yum install -y unzip zip
 
@@ -15,9 +15,9 @@ RUN \
     # Install GraalVM Native Image
     gu install native-image;
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
+# RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
-RUN native-image --version
+# RUN native-image --version
 
 RUN \
     yum update -y; \
