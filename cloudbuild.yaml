@@ -19,8 +19,9 @@
    - 'asia-south1	'
  # In this option we are providing the worker pool name that we have # created in the previous step
  options:
-  pool:
-    name: 'projects/$PROJECT_ID/locations/asia-south1/workerPools/Test-Build'
+  machineType: E2-STANDARD-8
+#   pool:
+#     name: 'projects/$PROJECT_ID/locations/asia-south1/workerPools/Test-Build'
    
  images:
  - 'gcr.io/$PROJECT_ID/doctorspace:$COMMIT_SHA'
