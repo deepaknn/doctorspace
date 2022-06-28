@@ -16,7 +16,7 @@
    - '--image'
    - 'gcr.io/$PROJECT_ID/doctorspace:$COMMIT_SHA'
    - '--region'
-   - 'asia-south1	'
+   - 'asia-south1'
  # In this option we are providing the worker pool name that we have # created in the previous step
  options:
   machineType: E2_HIGHCPU_32
