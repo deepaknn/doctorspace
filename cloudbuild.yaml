@@ -19,7 +19,7 @@
    - 'asia-south1'
  # In this option we are providing the worker pool name that we have # created in the previous step
  options:
-  machineType: E2_HIGHCPU_32
+  machineType: E2_HIGHMEM_4
 #   pool:
 #     name: 'projects/$PROJECT_ID/locations/asia-south1/workerPools/Test-Build'
    
