@@ -15,9 +15,9 @@ RUN \
     # Install GraalVM Native Image
     gu install native-image;
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
+# RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn --version
 
-RUN native-image --version
+# RUN native-image --version
 
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && mvn -DskipTests -Pnative package
 
